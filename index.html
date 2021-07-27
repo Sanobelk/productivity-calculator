@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="">
+    <style>
+
+    select{
+        width:60px;
+    }
+    
+    </style>
+</head>
+<body>
+
+<div id="form">
+
+    <!-- hours -->
+    <select id="start_hours" class="hour_selection">
+        <option id="start_hours_1">01</option>
+    </select> :
+    <select id="start_minutes" class="minute_selection">
+        <option id="start_minutes_1">01</option>
+    </select>
+    <!-- minutes -->
+    -
+    <select id="start_ampm">
+        <option class="am">AM</option>
+        <option class="pm">PM</option>
+    </select>
+    <br>
+
+    <!-- hours -->
+    <select id="end_hours" class="hour_selection">
+        <option id="end_hours_1">01</option>
+    </select> :
+    <select id="end_minutes" class="minute_selection">
+        <option id="end_minutes_1">01</option>
+    </select>
+    <!-- minutes -->
+    -
+    <select id="end_ampm">
+        <option class="am">AM</option>
+        <option class="pm">PM</option>
+    </select>
+    <br>
+    
+
+    <input type="radio" id="radio_productive" name="productivity" value="productive">Productive
+    <input type="radio" id="radio_unproductive" name="productivity" value="unproductive">Unproductive
+
+    <br>
+    <br>
+
+    <button id="submit">Submit</button></span>
+
+</div>
+
+<div id="results">
+
+    <p>Total Time: <span id="total_time_spent"></span></p>
+    <p>Productive: <span id="total_productive"></span></p>
+    <p>Unproductive: <span id="total_unproductive"></span></p>
+
+</div>
+
+<div id="history">
+
+<ol>
+
+
+</ol>
+
+
+</div>
+    
+</body>
+<script>
+"use strict";
+
+
+let user_hour_select = document.querySelectorAll('.hour_selection');
+let user_minute_select = document.querySelectorAll('.minute_selection');
+
+user_hour_select.forEach(element =>{
+    element.addEventListener('click',function(){
+        expand_selection(element);
+    });
+});
+
+user_minute_select.forEach(element =>{
+    element.addEventListener('click',function(){
+        expand_selection(element);
+    });
+});
+
+function expand_selection(element){
+
+    //if selection is an hour input
+    if(element.classList.contains('hour_selection')){
+        if(element.classList.contains('expand')){
+            return;
+        }else{
+            console.log('expand added');
+            element.classList.add('expand');
+            for (let i = 2; i <= 12; i++){
+                let temp = document.createElement('option');
+                let temp_id = element.getAttribute('id');
+                temp.setAttribute('id',`${temp_id}_${i}`);
+                if(i < 10){
+                    temp.innerHTML = `0${i}`;
+                }else{
+                temp.innerHTML = i;
+                }
+                element.append(temp);
+            }
+        }
+    //if selection is a minute input
+    } else {
+        if(element.classList.contains('expand')){
+            return;
+        }else{
+            console.log('expand added');
+            element.classList.add('expand');
+            for (let i = 2; i <= 59; i++){
+                let temp = document.createElement('option');
+                let temp_id = element.getAttribute('id');
+                temp.setAttribute('id',`${temp_id}_${i}`);
+                if(i < 10){
+                    temp.innerHTML = `0${i}`;
+                }else{
+                temp.innerHTML = i;
+                }
+                element.append(temp);
+            }
+        }
+    }
+}
+
+function getTimeDifference(){
+    let start_hour = +document.getElementById('start_hours').value;
+    let start_minutes = +document.getElementById('start_minutes').value;
+    let start_ampm = document.getElementById('start_ampm').value;
+    let end_hour = +document.getElementById('end_hours').value;
+    let end_minutes = +document.getElementById('end_minutes').value;
+    let end_ampm = document.getElementById('end_ampm').value;
+    //console.log(`
+    //Start Time : ${start_hour} : ${start_minutes} ${start_ampm}\n
+    //End Time: ${end_hour} : ${end_minutes} ${end_ampm};`);
+
+    let start_time = new Date();
+    if(start_ampm == 'PM'){
+        start_hour+=12;
+        
+    }
+    start_time.setHours(start_hour);
+    start_time.setMinutes(start_minutes);
+    start_time.setSeconds(0);
+    console.log(start_time);
+
+    let end_time = new Date();
+    if(end_ampm == 'PM'){
+        end_hour+=12;
+    }
+    end_time.setHours(end_hour);
+    end_time.setMinutes(end_minutes);
+    end_time.setSeconds(0);
+    console.log(end_time);
+}
+
+/*
+    <!-- hours -->
+    <select id="start_hours" class="hour_selection">
+        <option id="start_hours_1">1</option>
+    </select>
+    <select id="start_minutes" class="minute_selection">
+        <option id="start_minutes_1">1</option>
+    </select>
+    <!-- minutes -->
+    
+    <select id="start_ampm">
+        <option class="am">AM</option>
+        <option class="pm">PM</option>
+    </select>
+    <br>
+
+    <!-- hours -->
+    <select id="end_hours" class="hour_selection">
+        <option id="end_hours_1">1</option>
+    </select>
+    <select id="end_minutes" class="minute_selection">
+        <option id="end_minutes_1">1</option>
+    </select>
+    <!-- minutes -->
+}
+*/
+document.getElementById('submit').addEventListener('click',function(){
+    let time = getTimeDifference();
+})
+
+
+
+
+</script>
+</html>
