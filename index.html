@@ -23,7 +23,7 @@
         <option id="start_hours_1">01</option>
     </select> :
     <select id="start_minutes" class="minute_selection">
-        <option id="start_minutes_1">01</option>
+        <option id="start_minutes_1">00</option>
     </select>
     <!-- minutes -->
     -
@@ -38,7 +38,7 @@
         <option id="end_hours_1">01</option>
     </select> :
     <select id="end_minutes" class="minute_selection">
-        <option id="end_minutes_1">01</option>
+        <option id="end_minutes_1">00</option>
     </select>
     <!-- minutes -->
     -
@@ -61,9 +61,9 @@
 
 <div id="results">
 
-    <p>Total Time: <span id="total_time_spent"></span></p>
-    <p>Productive: <span id="total_productive"></span></p>
-    <p>Unproductive: <span id="total_unproductive"></span></p>
+    <p>Total Time: <span id="total_time_hours">00</span> hours, <span id="total_time_minutes">00</span> minutes</p>
+    <p>Productive: <span id="total_productive_hours">00</span> hours, <span id="total_productive_minutes">00</span> minutes</p>
+    <p>Unproductive: <span id="total_unproductive_hours">00</span> hours, <span id="total_unproductive_minutes">00</span> minutes</p>
 
 </div>
 
@@ -125,7 +125,7 @@ function expand_selection(element){
         }else{
             console.log('expand added');
             element.classList.add('expand');
-            for (let i = 2; i <= 59; i++){
+            for (let i = 1; i <= 59; i++){
                 let temp = document.createElement('option');
                 let temp_id = element.getAttribute('id');
                 temp.setAttribute('id',`${temp_id}_${i}`);
@@ -169,40 +169,45 @@ function getTimeDifference(){
     end_time.setMinutes(end_minutes);
     end_time.setSeconds(0);
     console.log(end_time);
+
+    let date = new Date();
+    date.setHours(end_time.getHours() - start_time.getHours());
+    date.setMinutes(end_time.getMinutes() - start_time.getMinutes());
+    date.setSeconds(0);
+    return date;
+
+
+
 }
 
-/*
-    <!-- hours -->
-    <select id="start_hours" class="hour_selection">
-        <option id="start_hours_1">1</option>
-    </select>
-    <select id="start_minutes" class="minute_selection">
-        <option id="start_minutes_1">1</option>
-    </select>
-    <!-- minutes -->
-    
-    <select id="start_ampm">
-        <option class="am">AM</option>
-        <option class="pm">PM</option>
-    </select>
-    <br>
-
-    <!-- hours -->
-    <select id="end_hours" class="hour_selection">
-        <option id="end_hours_1">1</option>
-    </select>
-    <select id="end_minutes" class="minute_selection">
-        <option id="end_minutes_1">1</option>
-    </select>
-    <!-- minutes -->
-}
-*/
 document.getElementById('submit').addEventListener('click',function(){
     let time = getTimeDifference();
+
+
+    if(document.getElementById('radio_productive').checked){
+        document.getElementById('total_productive_hours').innerHTML = +document.getElementById('total_productive_hours').innerHTML + time.getHours();
+        document.getElementById('total_productive_minutes').innerHTML = +document.getElementById('total_productive_minutes').innerHTML + time.getMinutes();
+        if(document.getElementById('total_productive_minutes').innerHTML >= 60){
+            document.getElementById('total_productive_hours').innerHTML = Number(document.getElementById('total_productive_hours').innerHTML)+ 1;
+            document.getElementById('total_productive_minutes').innerHTML = document.getElementById('total_productive_minutes').innerHTML - 60;
+        }
+
+    }
+    if(document.getElementById('radio_unproductive').checked){
+        document.getElementById('total_unproductive_hours').innerHTML = +document.getElementById('total_unproductive_hours').innerHTML + time.getHours();
+        document.getElementById('total_unproductive_minutes').innerHTML = +document.getElementById('total_unproductive_minutes').innerHTML + time.getMinutes();
+    }
+    document.getElementById('total_time_hours').innerHTML = +document.getElementById('total_time_hours').innerHTML + time.getHours();
+    document.getElementById('total_time_minutes').innerHTML = +document.getElementById('total_time_minutes').innerHTML + time.getMinutes();
 })
 
 
 
+/*
+    <p>Total Time: <span id="total_time_hours">00</span> hours, <span id="total_time_minutes">00</span> minutes</p>
+    <p>Productive: <span id="total_productive_hours">00</span> hours, <span id="total_productive_minutes">00</span> minutes</p>
+    <p>Unproductive: <span id="total_unproductive_hours">00</span> hours, <span id="total_unproductive_minutes">00</span> minutes</p>
+*/
 
 </script>
 </html>
