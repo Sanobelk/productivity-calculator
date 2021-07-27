@@ -182,21 +182,23 @@ function getTimeDifference(){
 
 document.getElementById('submit').addEventListener('click',function(){
     let time = getTimeDifference();
+    let total_productive_hours = document.getElementById('total_productive_hours');
+    let total_productive_minutes = document.getElementById('total_productive_minutes');
 
 
     if(document.getElementById('radio_productive').checked){
-        document.getElementById('total_productive_hours').innerHTML = +document.getElementById('total_productive_hours').innerHTML + time.getHours();
-        document.getElementById('total_productive_minutes').innerHTML = +document.getElementById('total_productive_minutes').innerHTML + time.getMinutes();
-        if(document.getElementById('total_productive_minutes').innerHTML >= 60){
-            document.getElementById('total_productive_hours').innerHTML = Number(document.getElementById('total_productive_hours').innerHTML)+ 1;
-            document.getElementById('total_productive_minutes').innerHTML = document.getElementById('total_productive_minutes').innerHTML - 60;
+        total_productive_hours.innerHTML = +total_productive_hours.innerHTML + time.getHours();
+        total_productive_minutes.innerHTML = +total_productive_minutes.innerHTML + time.getMinutes();
+        if(total_productive_minutes.innerHTML >= 60){
+            total_productive_hours.innerHTML = +total_productive_hours.innerHTML+ 1;
+            total_productive_minutes.innerHTML = +total_productive_minutes.innerHTML - 60;
         }
 
     }
-    if(document.getElementById('radio_unproductive').checked){
+    /*if(document.getElementById('radio_unproductive').checked){
         document.getElementById('total_unproductive_hours').innerHTML = +document.getElementById('total_unproductive_hours').innerHTML + time.getHours();
         document.getElementById('total_unproductive_minutes').innerHTML = +document.getElementById('total_unproductive_minutes').innerHTML + time.getMinutes();
-    }
+    }*/
     document.getElementById('total_time_hours').innerHTML = +document.getElementById('total_time_hours').innerHTML + time.getHours();
     document.getElementById('total_time_minutes').innerHTML = +document.getElementById('total_time_minutes').innerHTML + time.getMinutes();
 })
