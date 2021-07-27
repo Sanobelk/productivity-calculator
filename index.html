@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" type="text/css" href="">
+    <link rel="stylesheet" type="text/css" href="style.css">
     <style>
 
     select{
@@ -17,6 +17,12 @@
 <body>
 
 <div id="form">
+
+    <div id ="inputs">
+
+    <input type="text" id="activity">
+    <br>
+    <br>
 
     <!-- hours -->
     <select id="start_hours" class="hour_selection">
@@ -57,19 +63,21 @@
 
     <button id="submit">Submit</button></span>
 
+    </div>
+
 </div>
 
 <div id="results">
 
-    <p>Total Time: <span id="total_time_hours">00</span> hours, <span id="total_time_minutes">00</span> minutes</p>
-    <p>Productive: <span id="total_productive_hours">00</span> hours, <span id="total_productive_minutes">00</span> minutes</p>
-    <p>Unproductive: <span id="total_unproductive_hours">00</span> hours, <span id="total_unproductive_minutes">00</span> minutes</p>
+    <p id="total_time">Total Time: <span id="total_time_hours">00</span> hours, <span id="total_time_minutes">00</span> minutes</p>
+    <p id="productive_results">Productive: <span id="total_productive_hours">00</span> hours, <span id="total_productive_minutes">00</span> minutes</p>
+    <p id="unproductive_results">Unproductive: <span id="total_unproductive_hours">00</span> hours, <span id="total_unproductive_minutes">00</span> minutes</p>
 
 </div>
 
 <div id="history">
 
-<ol>
+<ol id="list">
 
 
 </ol>
@@ -78,138 +86,6 @@
 </div>
     
 </body>
-<script>
-"use strict";
+<script src="script.js"></script>
 
-
-let user_hour_select = document.querySelectorAll('.hour_selection');
-let user_minute_select = document.querySelectorAll('.minute_selection');
-
-user_hour_select.forEach(element =>{
-    element.addEventListener('click',function(){
-        expand_selection(element);
-    });
-});
-
-user_minute_select.forEach(element =>{
-    element.addEventListener('click',function(){
-        expand_selection(element);
-    });
-});
-
-function expand_selection(element){
-
-    //if selection is an hour input
-    if(element.classList.contains('hour_selection')){
-        if(element.classList.contains('expand')){
-            return;
-        }else{
-            console.log('expand added');
-            element.classList.add('expand');
-            for (let i = 2; i <= 12; i++){
-                let temp = document.createElement('option');
-                let temp_id = element.getAttribute('id');
-                temp.setAttribute('id',`${temp_id}_${i}`);
-                if(i < 10){
-                    temp.innerHTML = `0${i}`;
-                }else{
-                temp.innerHTML = i;
-                }
-                element.append(temp);
-            }
-        }
-    //if selection is a minute input
-    } else {
-        if(element.classList.contains('expand')){
-            return;
-        }else{
-            console.log('expand added');
-            element.classList.add('expand');
-            for (let i = 1; i <= 59; i++){
-                let temp = document.createElement('option');
-                let temp_id = element.getAttribute('id');
-                temp.setAttribute('id',`${temp_id}_${i}`);
-                if(i < 10){
-                    temp.innerHTML = `0${i}`;
-                }else{
-                temp.innerHTML = i;
-                }
-                element.append(temp);
-            }
-        }
-    }
-}
-
-function getTimeDifference(){
-    let start_hour = +document.getElementById('start_hours').value;
-    let start_minutes = +document.getElementById('start_minutes').value;
-    let start_ampm = document.getElementById('start_ampm').value;
-    let end_hour = +document.getElementById('end_hours').value;
-    let end_minutes = +document.getElementById('end_minutes').value;
-    let end_ampm = document.getElementById('end_ampm').value;
-    //console.log(`
-    //Start Time : ${start_hour} : ${start_minutes} ${start_ampm}\n
-    //End Time: ${end_hour} : ${end_minutes} ${end_ampm};`);
-
-    let start_time = new Date();
-    if(start_ampm == 'PM'){
-        start_hour+=12;
-        
-    }
-    start_time.setHours(start_hour);
-    start_time.setMinutes(start_minutes);
-    start_time.setSeconds(0);
-    console.log(start_time);
-
-    let end_time = new Date();
-    if(end_ampm == 'PM'){
-        end_hour+=12;
-    }
-    end_time.setHours(end_hour);
-    end_time.setMinutes(end_minutes);
-    end_time.setSeconds(0);
-    console.log(end_time);
-
-    let date = new Date();
-    date.setHours(end_time.getHours() - start_time.getHours());
-    date.setMinutes(end_time.getMinutes() - start_time.getMinutes());
-    date.setSeconds(0);
-    return date;
-
-
-
-}
-
-document.getElementById('submit').addEventListener('click',function(){
-    let time = getTimeDifference();
-    let total_productive_hours = document.getElementById('total_productive_hours');
-    let total_productive_minutes = document.getElementById('total_productive_minutes');
-
-
-    if(document.getElementById('radio_productive').checked){
-        total_productive_hours.innerHTML = +total_productive_hours.innerHTML + time.getHours();
-        total_productive_minutes.innerHTML = +total_productive_minutes.innerHTML + time.getMinutes();
-        if(total_productive_minutes.innerHTML >= 60){
-            total_productive_hours.innerHTML = +total_productive_hours.innerHTML+ 1;
-            total_productive_minutes.innerHTML = +total_productive_minutes.innerHTML - 60;
-        }
-
-    }
-    /*if(document.getElementById('radio_unproductive').checked){
-        document.getElementById('total_unproductive_hours').innerHTML = +document.getElementById('total_unproductive_hours').innerHTML + time.getHours();
-        document.getElementById('total_unproductive_minutes').innerHTML = +document.getElementById('total_unproductive_minutes').innerHTML + time.getMinutes();
-    }*/
-    document.getElementById('total_time_hours').innerHTML = +document.getElementById('total_time_hours').innerHTML + time.getHours();
-    document.getElementById('total_time_minutes').innerHTML = +document.getElementById('total_time_minutes').innerHTML + time.getMinutes();
-})
-
-
-
-/*
-    <p>Total Time: <span id="total_time_hours">00</span> hours, <span id="total_time_minutes">00</span> minutes</p>
-    <p>Productive: <span id="total_productive_hours">00</span> hours, <span id="total_productive_minutes">00</span> minutes</p>
-    <p>Unproductive: <span id="total_unproductive_hours">00</span> hours, <span id="total_unproductive_minutes">00</span> minutes</p>
-*/
-
-</script>
 </html>
