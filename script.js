@@ -3,6 +3,23 @@
 
 let user_hour_select = document.querySelectorAll('.hour_selection');
 let user_minute_select = document.querySelectorAll('.minute_selection');
+let saved_history = window.localStorage;
+
+document.getElementById('save').addEventListener('click',function(){
+    saveData();
+})
+document.getElementById('load').addEventListener('click',function(){
+    loadData();
+})
+
+let now_buttons = document.querySelectorAll('.now');
+
+now_buttons.forEach(element => {
+    element.addEventListener('click',function(){
+        setTimeNow(element);
+    })
+});
+
 
 user_hour_select.forEach(element =>{
     element.addEventListener('click',function(){
@@ -103,6 +120,14 @@ document.getElementById('submit').addEventListener('click',function(){
     let total_hours = document.getElementById('total_time_hours');
     let total_minutes = document.getElementById('total_time_minutes');
 
+    if(document.getElementById('activity').value == ''){
+        document.getElementById('activity_error').innerHTML = 'Error: Task Required';
+        setTimeout(() =>{
+            document.getElementById('activity_error').innerHTML = '*';
+        },3000);
+        return;
+    }
+
     //Productive Time Counted
     if(document.getElementById('radio_productive').checked){
         total_productive_hours.innerHTML = +total_productive_hours.innerHTML + time.getHours();
@@ -150,7 +175,7 @@ function addEntryToList(time){
     }else{
         productivity = "<span class='unproductive'>UNPRODUCTIVE</span>";
     }
-    temp.innerHTML = `${activity} : ${productivity} : ${time.getHours()} hours, ${time.getMinutes()} minutes.`;
+    temp.innerHTML = `<span class="history_item"> ${activity} : ${productivity} : ${time.getHours()} hours, ${time.getMinutes()} minutes.`;
     document.getElementById('list').insertAdjacentHTML('beforeend',temp.outerHTML);
 }
 
@@ -179,4 +204,39 @@ function checkProductivity(){
         total_time.style.color="black";
     }
     console.log(`Total Productive Hours: ${total_productive_hours}\nTotal Unproductive_hours: ${total_unproductive_hours}`);
+}
+
+function saveData(){
+    saved_history.setItem('history',document.getElementById('list').innerHTML); //could be an array instead, but saving the text will do for now.
+
+    //remove the data.
+    let list_items = document.querySelectorAll('li');
+    list_items.forEach(element => {
+        element.remove();
+    });
+}
+
+function loadData(){
+    document.getElementById('list').innerHTML = saved_history.getItem('history');
+}
+
+function setTimeNow(element){
+    let date = new Date();
+    if(element.getAttribute('id') == 'now_start'){
+        expand_selection(document.getElementById('start_hours'));
+        expand_selection(document.getElementById('start_minutes'));
+        document.getElementById('start_hours').value = date.getHours();
+        document.getElementById('start_minutes').value = date.getMinutes();
+        if(date.getHours() >= 12){
+            document.getElementById('start_ampm').value = 'PM';
+    }
+    }else{
+        expand_selection(document.getElementById('end_hours'));
+        expand_selection(document.getElementById('end_minutes'));
+        document.getElementById('end_hours').value = date.getHours();
+        document.getElementById('end_minutes').value=date.getMinutes();
+        if(date.getHours() >= 12){
+            document.getElementById('end_ampm').value = 'PM';
+        }
+    }
 }
