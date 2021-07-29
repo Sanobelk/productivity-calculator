@@ -88,21 +88,23 @@ function getTimeDifference(){
     //End Time: ${end_hour} : ${end_minutes} ${end_ampm};`);
 
     let start_time = new Date();
-    if(start_ampm == 'PM'){
+    if(start_hour != 12 && start_ampm == 'PM'){
         start_hour+=12;
-        
     }
     start_time.setHours(start_hour);
     start_time.setMinutes(start_minutes);
     start_time.setSeconds(0);
+    console.log(start_time);
+    alert('hi');
 
     let end_time = new Date();
-    if(end_ampm == 'PM'){
+    if(end_hour != 12 && end_ampm == 'PM'){
         end_hour+=12;
     }
     end_time.setHours(end_hour);
     end_time.setMinutes(end_minutes);
     end_time.setSeconds(0);
+    console.log(end_time);
 
     let date = new Date();
     date.setHours(end_time.getHours() - start_time.getHours());
@@ -225,18 +227,35 @@ function setTimeNow(element){
     if(element.getAttribute('id') == 'now_start'){
         expand_selection(document.getElementById('start_hours'));
         expand_selection(document.getElementById('start_minutes'));
-        document.getElementById('start_hours').value = date.getHours();
-        document.getElementById('start_minutes').value = date.getMinutes();
-        if(date.getHours() >= 12){
+
+        let hours = date.getHours();
+        if(hours > 12){
             document.getElementById('start_ampm').value = 'PM';
-    }
+            hours -= 12;
+            if(hours < 10){
+                document.getElementById('start_hours').value = `0${hours}`;
+            }else{
+                document.getElementById('start_hours').value = `${hours}`;
+            }
+        }
+        document.getElementById('start_minutes').value = date.getMinutes();
+
+
     }else{
         expand_selection(document.getElementById('end_hours'));
         expand_selection(document.getElementById('end_minutes'));
-        document.getElementById('end_hours').value = date.getHours();
-        document.getElementById('end_minutes').value=date.getMinutes();
-        if(date.getHours() >= 12){
+
+        let hours = date.getHours();
+        if(hours > 12){
             document.getElementById('end_ampm').value = 'PM';
+            hours -= 12;
+            if(hours < 10){
+                document.getElementById('end_hours').value = `0${hours}`;
+            }else{
+                document.getElementById('end_hours').value = `${hours}`;
+            }
         }
+        document.getElementById('end_minutes').value = date.getMinutes();
     }
+    
 }
