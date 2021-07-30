@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -93,4 +94,101 @@
 </body>
 <script src="script.js"></script>
 
+=======
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <style>
+
+    select{
+        width:60px;
+    }
+    
+    </style>
+</head>
+<body>
+
+<div id="form">
+
+    <div id ="inputs">
+
+    <input type="text" id="activity"> <span class="error" id="activity_error">*</span>
+    <br>
+    <br>
+
+    <!-- hours -->
+    <select id="start_hours" class="hour_selection">
+        <option id="start_hours_1">01</option>
+    </select> :
+    <select id="start_minutes" class="minute_selection">
+        <option id="start_minutes_1">00</option>
+    </select>
+    <!-- minutes -->
+    -
+    <select id="start_ampm">
+        <option class="am">AM</option>
+        <option class="pm">PM</option>
+    </select>
+    <button class="now" id="now_start">Now</button>
+    <br>
+
+    <!-- hours -->
+    <select id="end_hours" class="hour_selection">
+        <option id="end_hours_1">01</option>
+    </select> :
+    <select id="end_minutes" class="minute_selection">
+        <option id="end_minutes_1">00</option>
+    </select>
+    <!-- minutes -->
+    -
+    <select id="end_ampm">
+        <option class="am">AM</option>
+        <option class="pm">PM</option>
+    </select>
+    <button class="now" id="now_end">Now</button>
+    <br>
+    
+
+    <input type="radio" id="radio_productive" name="productivity" value="productive" checked>Productive
+    <input type="radio" id="radio_unproductive" name="productivity" value="unproductive">Unproductive
+
+    <br>
+    <br>
+
+    <button id="submit">Submit</button></span>
+    <button id="save">Save</button>
+    <button id="load">Load</button>
+    </div>
+
+</div>
+
+<div id="results">
+
+    <p id="total_time">Total Time: <span id="total_time_hours">00</span> hours, <span id="total_time_minutes">00</span> minutes</p>
+    <p id="productive_results">Productive: <span id="total_productive_hours">00</span> hours, <span id="total_productive_minutes">00</span> minutes</p>
+    <p id="unproductive_results">Unproductive: <span id="total_unproductive_hours">00</span> hours, <span id="total_unproductive_minutes">00</span> minutes</p>
+
+</div>
+
+<div id="history">
+
+<h2>History</h2>
+
+<ol id="list">
+
+
+</ol>
+
+
+</div>
+    
+</body>
+<script src="script.js"></script>
+
+>>>>>>> a55ffc39d1cfe50ec74aab28797632f0e500dce9
 </html>
