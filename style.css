@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 html, body{
     margin:0;
     padding:0;
@@ -44,51 +43,4 @@ html, body{
 
 .error{
     color:red;
-=======
-html, body{
-    margin:0;
-    padding:0;
-}
-
-
-
-#form{
-    display:flex;
-    justify-content:center;
-    width:100%;
-    margin:auto;
-    background-color:pink;
-    padding:30px;
-}
-
-#results, #list{
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
-}
-
-#results{
-    width:70%;
-    border:2px solid pink;
-    margin:auto;
-}
-
-#history{
-    margin:auto;
-    width:70%;
-    text-align:center;
-}
-
-#productive_results, .productive{
-    color:green;
-}
-
-#unproductive_results, .unproductive{
-    color:red;
-}
-
-.error{
-    color:red;
->>>>>>> a55ffc39d1cfe50ec74aab28797632f0e500dce9
 }
